@@ -24,25 +24,27 @@ const App = () => {
   };
 
   const deleteElement = (id) => {
-    const listaFiltrada = lista.filter((tarea, i) => i != id);
+    const listaFiltrada = lista.filter((tarea, i) => i !== id);
     setLista(listaFiltrada);
   };
 
   const [editedElement, setEditElement] = useState(false);
+  const [id, setId] = useState("");
   const editElement = (id) => {
-    console.log("quiero editar", id);
     setEditElement(true);
+    setId(id);
   };
 
   const [newValue, setNewValue] = useState("");
 
   const handleChangeEdit = (e) => {
     setNewValue(e.target.value);
-    console.log(newValue);
   };
 
   const handleClickEdit = () => {
-    console.log("editar");
+    lista.splice(id, 1, newValue);
+    setLista(lista);
+    setEditElement(false);
   };
 
   return (
@@ -66,7 +68,7 @@ const App = () => {
             value={valorDelInput}
             onChange={handleChange}
             type="text"
-            placeholder="Por ej, putear a Pepo"
+            placeholder="Agrega una tare nueva"
           />
         </label>
         <button onClick={handleClick}>Agregar tarea</button>
@@ -80,7 +82,8 @@ const App = () => {
                 value={newValue}
                 onChange={handleChangeEdit}
                 type="text"
-                placeholder=""
+                placeholder="Modifica una tarea existente"
+                id={id}
               />
             </label>
             <button onClick={handleClickEdit}>Modificar tarea</button>
