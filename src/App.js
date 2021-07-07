@@ -4,6 +4,9 @@ import "./App.scss";
 
 const App = () => {
   const [valorDelInput, setValorDelInput] = useState("");
+  const [newValue, setNewValue] = useState("");
+  const [editedElement, setEditElement] = useState(false);
+  const [id, setId] = useState("");
 
   const [lista, setLista] = useState([
     "Lavar ropa",
@@ -15,7 +18,7 @@ const App = () => {
   ]);
 
   const handleClick = () => {
-    setLista([...lista, valorDelInput]);
+    valorDelInput && setLista([...lista, valorDelInput]);
     setValorDelInput("");
   };
 
@@ -24,26 +27,22 @@ const App = () => {
   };
 
   const deleteElement = (id) => {
-    const listaFiltrada = lista.filter((tarea, i) => i !== id);
-    setLista(listaFiltrada);
+    setLista([...lista].filter((tarea, i) => i !== id));
   };
 
-  const [editedElement, setEditElement] = useState(false);
-  const [id, setId] = useState("");
   const editElement = (id) => {
     setEditElement(true);
     setId(id);
   };
-
-  const [newValue, setNewValue] = useState("");
 
   const handleChangeEdit = (e) => {
     setNewValue(e.target.value);
   };
 
   const handleClickEdit = () => {
-    lista.splice(id, 1, newValue);
-    setLista(lista);
+    const nuevaLista = [...lista];
+    nuevaLista.splice(id, 1, newValue);
+    setLista(nuevaLista);
     setEditElement(false);
   };
 
